@@ -24,5 +24,22 @@ module WoW
 
       @config = config
     end
+
+    # @param file [::File]
+    # @return [WoW::DBC::File]
+    def self.read_file(file)
+      Reader.new(file).read_file
+    end
+
+    # @param file [::File]
+    # @param schema [Class<WoW::DBC::Schema>]
+    # @return [Enumerable<Wow::DBC::Schema>]
+    def self.read_records(file, schema)
+      file = read_file(file)
+
+      file.records.lazy.map do |record|
+        schema.new(file, record)
+      end
+    end
   end
 end
