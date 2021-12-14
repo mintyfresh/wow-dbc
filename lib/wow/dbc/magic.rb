@@ -2,6 +2,6 @@
 
 module WoW
   module DBC
-    VERSION = '0.1.0'
+    MAGIC = 'WDBC'
   end
 end

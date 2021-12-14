@@ -4,7 +4,7 @@ require_relative 'lib/wow/dbc/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'wow-dbc'
-  spec.version       = Wow::Dbc::VERSION
+  spec.version       = WoW::DBC::VERSION
   spec.authors       = ['Minty Fresh']
   spec.email         = ['7896757+mintyfresh@users.noreply.github.com']
 
@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.description   = spec.summary
   spec.homepage      = 'https://github.com/mintyfresh/wow-dbc'
   spec.license       = 'MIT'
-  spec.required_ruby_version = '>= 2.5.0'
+  spec.required_ruby_version = '>= 2.6.0'
 
   spec.metadata['allowed_push_host'] = 'https://rubygems.org'
   spec.metadata['rubygems_mfa_required'] = 'true'

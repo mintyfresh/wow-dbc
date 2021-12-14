@@ -2,6 +2,6 @@
 
 module WoW
   module DBC
-    VERSION = '0.1.0'
+    FormatError = Class.new(StandardError)
   end
 end
