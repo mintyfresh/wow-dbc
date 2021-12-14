@@ -25,13 +25,15 @@ module WoW
       @config = config
     end
 
-    # @param file [::File]
+    # @param file [::File, String, Pathname]
     # @return [WoW::DBC::File]
     def self.read_file(file)
+      file = ::File.open(file, 'rb') if file.is_a?(String) || file.is_a?(Pathname)
+
       Reader.new(file).read_file
     end
 
-    # @param file [::File]
+    # @param file [::File, String, Pathname]
     # @param schema [Class<WoW::DBC::Schema>]
     # @return [Enumerable<Wow::DBC::Schema>]
     def self.read_records(file, schema)
