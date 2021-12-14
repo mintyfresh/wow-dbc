@@ -40,7 +40,7 @@ module WoW
       file = read_file(file)
 
       file.records.lazy.map do |record|
-        schema.new(file, record)
+        schema.build_from_record(file, record)
       end
     end
   end

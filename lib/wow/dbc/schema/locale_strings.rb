@@ -13,7 +13,7 @@ module WoW
             string(:"#{name}_#{locale}")
           end
 
-          field(:"#{name}_flags", :uint32) if include_flags?
+          uint32(:"#{name}_flags") if include_flags?
 
           define_method(name) do
             send(:"#{name}_#{DBC.config.default_locale}")

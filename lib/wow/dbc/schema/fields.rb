@@ -4,9 +4,14 @@ module WoW
   module DBC
     class Schema
       module Fields
-        # @return [Array<Symbol>]
+        # @return [Array<Array>]
         def fields
           @fields ||= []
+        end
+
+        # @return [Array<Symbol>]
+        def field_names
+          fields.map(&:first)
         end
 
         # @return [Integer]
@@ -21,11 +26,11 @@ module WoW
           raise ArgumentError, "#{self.name}##{name} is already defined" if method_defined?(name)
           raise ArgumentError, "Unsupported field format: #{format}" unless FORMATS.key?(format)
 
-          fields << [name, format]
+          index = (@fields_count ||= 0)
+          @fields_count += 1
 
-          define_method(name) do
-            @record.read_field(name, FORMATS.fetch(format))
-          end
+          fields << [name.to_sym, format, index]
+          attr_accessor name
         end
 
         # @param name [Symbol]
