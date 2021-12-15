@@ -26,12 +26,13 @@ module WoW
         # @return [void]
         def field(name, format)
           raise ArgumentError, "#{self.name}##{name} is already defined" if method_defined?(name)
-          raise ArgumentError, "Unsupported field format: #{format}" unless FORMATS.key?(format)
 
-          index = (@fields_count ||= 0)
-          @fields_count += 1
+          format = Format.lookup(format)
+          index  = (@fields_count ||= 0)
 
           fields << Field.new(name.to_sym, format, index)
+          @fields_count += 1
+
           attr_accessor name
         end
 
@@ -51,7 +52,7 @@ module WoW
           end
         end
 
-        FORMATS.each_key do |format|
+        Format::MAPPINGS.each_key do |format|
           define_method(format) { |name| field(name, format) }
           define_method(:"#{format}_array") { |name, length| array(name, format, length) }
         end

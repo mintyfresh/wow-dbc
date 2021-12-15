@@ -42,7 +42,7 @@ module WoW
       def write_records(records)
         records.each do |record|
           record.class.fields.each do |field|
-            @file.write(format_field(field, record.send(field.name)))
+            @file.write(field.format.pack_to_file(@string_map, record.send(field.name)))
           end
         end
       end
@@ -51,20 +51,6 @@ module WoW
       # @return [void]
       def write_strings(_records)
         @file.write(@strings)
-      end
-
-      # @param field [Schema::Fields::Field]
-      # @param value [String, Numeric]
-      # @return [void]
-      def format_field(field, value)
-        case field.format
-        when :uint32 then [value || 0].pack('V')
-        when :int32  then [value || 0].pack('N')
-        when :float  then [value || 0].pack('e')
-        when :string then [@string_map.fetch(value || '')].pack('V')
-        else
-          raise "Unsupported field type: #{field.type}"
-        end
       end
 
       # @param records [Array<Schema>]

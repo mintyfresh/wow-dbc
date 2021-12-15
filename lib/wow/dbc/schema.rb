@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'schema/formats'
 require_relative 'schema/fields'
 require_relative 'schema/locale_strings'
 
@@ -27,7 +26,7 @@ module WoW
         schema = new
 
         fields.each do |field|
-          schema.send("#{field.name}=", FORMATS.fetch(field.format).call(file, record, field.index))
+          schema.send("#{field.name}=", field.format.unpack_from_file(file, record, field.index))
         end
 
         schema
@@ -37,7 +36,11 @@ module WoW
       # @return [Hash]
       def fields(format: nil)
         fields = self.class.fields
-        fields = fields.select { |field| field.format == format } if format
+
+        if format
+          format = Format.lookup(format) if format.is_a?(Symbol)
+          fields = fields.select { |field| field.format == format }
+        end
 
         fields.map { |field| [field.name, send(field.name)] }.to_h
       end
