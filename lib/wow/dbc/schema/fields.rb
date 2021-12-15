@@ -4,14 +4,16 @@ module WoW
   module DBC
     class Schema
       module Fields
-        # @return [Array<Array>]
+        Field = Struct.new(:name, :format, :index)
+
+        # @return [Array<Field>]
         def fields
           @fields ||= []
         end
 
         # @return [Array<Symbol>]
         def field_names
-          fields.map(&:first)
+          fields.map(&:name)
         end
 
         # @return [Integer]
@@ -29,7 +31,7 @@ module WoW
           index = (@fields_count ||= 0)
           @fields_count += 1
 
-          fields << [name.to_sym, format, index]
+          fields << Field.new(name.to_sym, format, index)
           attr_accessor name
         end
 

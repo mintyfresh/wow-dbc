@@ -10,6 +10,11 @@ module WoW
       extend Fields
       extend LocaleStrings
 
+      # @return [Integer]
+      def self.record_size
+        fields_count * 4 # TODO: Compute precise record size.
+      end
+
       # @param file [WoW::DBC::File]
       # @param record [WoW::DBC::Record]
       # @return [Schema]
@@ -21,16 +26,20 @@ module WoW
 
         schema = new
 
-        fields.each do |(name, format, index)|
-          schema.send("#{name}=", FORMATS.fetch(format).call(file, record, index))
+        fields.each do |field|
+          schema.send("#{field.name}=", FORMATS.fetch(field.format).call(file, record, field.index))
         end
 
         schema
       end
 
+      # @param format [Symbol, nil]
       # @return [Hash]
-      def fields
-        self.class.field_names.map { |name| [name, send(name)] }.to_h
+      def fields(format: nil)
+        fields = self.class.fields
+        fields = fields.select { |field| field.format == format } if format
+
+        fields.map { |field| [field.name, send(field.name)] }.to_h
       end
     end
   end

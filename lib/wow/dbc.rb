@@ -9,6 +9,7 @@ require_relative 'dbc/reader'
 require_relative 'dbc/record'
 require_relative 'dbc/schema'
 require_relative 'dbc/version'
+require_relative 'dbc/writer'
 
 module WoW
   module DBC
