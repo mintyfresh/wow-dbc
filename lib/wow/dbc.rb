@@ -44,5 +44,14 @@ module WoW
         schema.build_from_record(file, record)
       end
     end
+
+    # @param file [::File, String, Pathname]
+    # @param records [Array<WoW::DBC::Schema>]
+    # @return [void]
+    def self.write_records(file, records)
+      file = ::File.open(file, 'wb') if file.is_a?(String) || file.is_a?(Pathname)
+
+      Writer.new(file).write_file(records)
+    end
   end
 end
