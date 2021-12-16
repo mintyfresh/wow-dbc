@@ -4,8 +4,14 @@ module WoW
   module DBC
     module Format
       class FloatFormat
+        # @param value [String, Numeric, nil]
+        # @return [Float, nil]
+        def cast(value)
+          value&.to_f
+        end
+
         # @param string_map [Hash{String => Integer}]
-        # @param value [String, nil]
+        # @param value [Float, nil]
         # @return [String]
         def pack_to_file(_, value)
           [value || 0.0].pack('e')

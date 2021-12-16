@@ -4,6 +4,12 @@ module WoW
   module DBC
     module Format
       class StringFormat
+        # @param value [Object, nil]
+        # @return [String, nil]
+        def cast(value)
+          value&.to_s
+        end
+
         # @param string_map [Hash{String => Integer}]
         # @param value [String, nil]
         # @return [String]
