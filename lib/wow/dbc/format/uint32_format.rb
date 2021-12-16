@@ -4,6 +4,8 @@ module WoW
   module DBC
     module Format
       class UInt32Format
+        # 32-bit unsigned, little-endian
+        FORMAT    = 'L<'
         MIN_VALUE = 0
         MAX_VALUE = (2**32) - 1
 
@@ -23,7 +25,7 @@ module WoW
         # @param value [Integer, nil]
         # @return [String]
         def pack_to_file(_, value)
-          [value || 0].pack('V')
+          [value || 0].pack(FORMAT)
         end
 
         # @param file [WoW::DBC::File]
@@ -31,7 +33,7 @@ module WoW
         # @param index [Integer]
         # @return [Integer]
         def unpack_from_file(_, record, index)
-          record.read_field(index, 'V')
+          record.read_field(index, FORMAT)
         end
       end
     end

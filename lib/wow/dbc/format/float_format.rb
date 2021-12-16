@@ -4,6 +4,9 @@ module WoW
   module DBC
     module Format
       class FloatFormat
+        # Single-precision, little-endian
+        FORMAT = 'e'
+
         # @param value [String, Numeric, nil]
         # @return [Float, nil]
         def cast(value)
@@ -14,7 +17,7 @@ module WoW
         # @param value [Float, nil]
         # @return [String]
         def pack_to_file(_, value)
-          [value || 0.0].pack('e')
+          [value || 0.0].pack(FORMAT)
         end
 
         # @param file [WoW::DBC::File]
@@ -22,7 +25,7 @@ module WoW
         # @param index [Integer]
         # @return [Float]
         def unpack_from_file(_, record, index)
-          record.read_field(index, 'e')
+          record.read_field(index, FORMAT)
         end
       end
     end

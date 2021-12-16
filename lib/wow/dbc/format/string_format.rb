@@ -4,6 +4,9 @@ module WoW
   module DBC
     module Format
       class StringFormat
+        # 32-bit unsigned, little-endian
+        FORMAT = 'L<'
+
         # @param value [Object, nil]
         # @return [String, nil]
         def cast(value)
@@ -14,7 +17,7 @@ module WoW
         # @param value [String, nil]
         # @return [String]
         def pack_to_file(string_map, value)
-          [string_map.fetch(value || '')].pack('V')
+          [string_map.fetch(value || '')].pack(FORMAT)
         end
 
         # @param file [WoW::DBC::File]
@@ -22,7 +25,7 @@ module WoW
         # @param index [Integer]
         # @return [String]
         def unpack_from_file(file, record, index)
-          file.read_string(record.read_field(index, 'V'))
+          file.read_string(record.read_field(index, FORMAT))
         end
       end
     end
