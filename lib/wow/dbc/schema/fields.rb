@@ -48,8 +48,8 @@ module WoW
             field(:"#{name}#{index}", format)
           end
 
-          define_array_reader(name)
-          define_array_writer(name)
+          define_array_reader(name, length)
+          define_array_writer(name, length)
         end
 
         Format::MAPPINGS.each_key do |format|
