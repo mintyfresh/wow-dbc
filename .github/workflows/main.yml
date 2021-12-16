@@ -14,7 +14,9 @@ jobs:
     strategy:
       matrix:
         ruby:
-          - 3.0.2
+          - 2.6.9
+          - 2.7.5
+          - 3.0.3
 
     steps:
     - uses: actions/checkout@v2
@@ -23,5 +25,7 @@ jobs:
       with:
         ruby-version: ${{ matrix.ruby }}
         bundler-cache: true
-    - name: Run the default task
-      run: bundle exec rake
+    - name: Rubocop
+      run: bin/rubocop
+    - name: RSpec
+      run: bin/rspec
