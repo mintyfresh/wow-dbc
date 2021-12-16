@@ -27,7 +27,7 @@ module WoW
           locales = []
 
           # Everything prior to Cataclysm.
-          if DBC.config.target_build <= 12340
+          if DBC.config.target_build <= 12_340
             locales += %i[enUS koKR frFR deDE enCN enTW esES esMX]
 
             # Additional locales added in Patch 2.1.0.
@@ -45,7 +45,7 @@ module WoW
         # @return [Boolean]
         def include_flags?
           # Cataclysm drops falgs.
-          DBC.config.target_build <= 12340
+          DBC.config.target_build <= 12_340
         end
       end
     end

@@ -9,7 +9,7 @@ module WoW
       attr_accessor :default_locale
 
       def initialize
-        @target_build   = 12340 # rubocop:disable Style/NumericLiterals
+        @target_build   = 12_340
         @default_locale = :enUS
       end
     end
